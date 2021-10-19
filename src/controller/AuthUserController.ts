@@ -5,9 +5,12 @@ class AuthUserController {
   async handler(request: Request, response: Response) {
     const { code } = request.body;
     const authUserService = new AuthUserService();
-    const result = await authUserService.execute(code);
-
-    return response.json(result);
+    try {
+      const result = await authUserService.execute(code);
+      return response.json(result);
+    } catch (error) {
+      return response.json(error.message)
+    }
   }
 }
 
